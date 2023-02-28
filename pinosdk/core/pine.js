@@ -15,8 +15,8 @@ class Pine {
 			urlParams[key] = value;
 		});
 		if(!urlParams.origin && urlParams.origin.length < 8) throw new Error("'origin' is invalid" );
-	//	await resolver.resolve(this, urlParams.origin, cb);
-		cb();
+		await resolver.resolve(this, urlParams.origin, cb);
+		// cb();
 	}
 	on(event, cb) {
 		try {
