@@ -9,7 +9,7 @@ async function startApp() {
 	let form = document.querySelector('form.main');
 	
 	try {
-	var pineData = await window.pine.fetch.get('https://api-pinocchio.cyclic.app/core/ee50c320-a0b6-400e-97e2-e9839c2f8c93')
+	var pineData = await window.pine.fetch.get(`https://api-pinocchio.cyclic.app/core/${app.pid}`)
 	pineData = pineData.data.url + "/pine-input.json";
 	pineData = (await axios.get(pineData)).data;
 	
@@ -82,6 +82,6 @@ function setConfig() {
 	searchParams.forEach((value, key) => {
 		urlParams[key] = value;
 	});
-	
+	window.app.pid = urlParams.pid
 //	window.app.params = urlParams;
 }
