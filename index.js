@@ -12,6 +12,8 @@ async function startApp() {
 		//	console.log(JSON.stringify(full));
 			let proto = (await window.pine.fetch.post("https://api-pinocchio.cyclic.app/pine/protocol/new", {pine: window.app.pid, params: full})).data.shortId;
 			console.log(proto)
+			alert(proto);
+			document.querySelector('form').innerHTML = proto
 			displayResults(proto);
 		}).catch((e)=>{
 			console.log(e)
