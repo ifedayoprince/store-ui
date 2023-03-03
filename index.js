@@ -19,8 +19,8 @@ async function startApp() {
 	} 
 	
 	try {
-		let app = {pid: "ee50c320-a0b6-400e-97e2-e9839c2f8c93"} 
-	window.app = app;
+		// let app = {pid: "ee50c320-a0b6-400e-97e2-e9839c2f8c93"} 
+	// window.app = app;
 	var pineData = await window.pine.fetch.get(`https://api-pinocchio.cyclic.app/core/${app.pid}`)
 	window.pine.data = pineData.data;
     
