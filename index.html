@@ -7,16 +7,16 @@
 	<title>PinoStore</title>
   
 	<!-- Pinocchio-related styles -->
-	<link rel="stylesheet" href="https://pino-sdk.vercel.app/css/core.css">
+	<link rel="stylesheet" href="/pinosdk/css/core.css">
   
 	<link rel="stylesheet" href="style.css">
 
-	<link rel="stylesheet" href="https://pino-sdk.vercel.app/css/flowbite.min.css"></link>
-	<script src="https://pino-sdk.vercel.app/utils/flowbite.min.js"></script>
-	<script src="https://pino-sdk.vercel.app/utils/tailwindcss.js"></script>
+	<link rel="stylesheet" href="/pinosdk/css/flowbite.min.css"></link>
+	<script src="/pinosdk/utils/flowbite.min.js"></script>
+	<script src="/pinosdk/utils/tailwindcss.js"></script>
 </head>
-<body id="frame-body" class="flex flex-col items-center px-[20px] py-3">
-	<div class="error hidden w-[85vw] px-[20px] flex bg-[#212528] border border-red-400 h-[85vw] rounded-lg items-center">
+<body class="flex text-white flex-col items-center px-[20px] py-3 bg-[#212528] ">
+	<div class="error hidden w-[85vw] px-[20px] flex bg-opacity-30 bg-red-800 border border-red-400 h-[85vw] rounded-lg items-center">
 		<h2 class="font-bold text-2xl text-center w-full">Network Error</h2>
 	</div>
 	<div role="status" id="loader" class="w-screen px-[20px] animate-pulse">
@@ -29,9 +29,9 @@
     	<div class="h-[13vw] rounded-lg bg-gray-700 w-full mb-4"></div>
 		<div class="h-[38vw] rounded-lg bg-gray-700 w-full mb-4"></div>
 	</div>
-	<form action="" class="hidden main w-screen h-full px-[20px] "></form>
+	<form class="hidden main w-screen h-full px-[20px]"></form>
 	
-	<script src="https://pino-sdk.vercel.app/utils/axios.min.js"></script>
+	<script src="/pinosdk/utils/axios.min.js"></script>
 	
 	<script type="module" src="index.js"></script>
 </body>
