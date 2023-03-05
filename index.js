@@ -11,10 +11,11 @@ async function startApp() {
 		startSubmit(e).then(async (full)=>{
 		//	console.log(JSON.stringify(full));
 			let proto = (await window.pine.fetch.post("https://api-pinocchio.cyclic.app/pine/protocol/new", {pine: window.app.pid, params: full})).data.shortId;
-			console.log(proto)
-			alert(proto);
-			document.querySelector('form').innerHTML = proto
-			displayResults(proto);
+			let prot = document.querySelector('.protocol')
+			prot.innerHTML = proto;
+			document.querySelector('.skelet').classList.add('hidden');
+			prot.parentElement.classList.remove('hidden')
+			// Android.broadcastProtocol(proto);
 		}).catch((e)=>{
 			console.log(e)
 		});
@@ -55,8 +56,10 @@ async function startSubmit(e) {
 	var finalObj = {};
 	e.preventDefault();
 	
-	alert('Started');
+	// alert('Started');
 	let form = document.querySelector('form')
+	form.classList.add('hidden');
+	document.querySelector('.skelet').classList.remove('hidden');
 	
 	let notes = form.querySelectorAll('textarea')
 	for(var el of notes) {
@@ -100,7 +103,7 @@ function drawObject(e) {
 	} else if (e.type == "note") {
 		out += `
 		<div class="relative z-0 w-full mb-6 group">
-    		<textarea name="${e.name.trim()}" id="note_input_${idIndex}" class="block py-2.5 h-${e.height} rounded-lg px-2 w-full text-sm bg-transparent appearance-none text-white ring-gray-400 ring-1 border-0 outline-none focus:ring-[#00ff0f] peer" placeholder=" " required></textarea>
+    		<textarea name="${e.name.trim()}" id="note_input_${idIndex}" class="block py-2.5 h-[${e.height}] rounded-lg px-2 w-full text-sm bg-transparent appearance-none text-white ring-gray-400 ring-1 border-0 outline-none focus:ring-[#00ff0f] peer" placeholder=" " required></textarea>
     		<label for="note_input_${idIndex}" class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-2.5 left-2 -z-15 origin-[0] peer-focus:left-2 peer-focus:text-[#00ff0f] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 bg-[#212528] px-2">${e.title.trim()}</label>
 		</div>`
 	} else if (e.type == "options") {
