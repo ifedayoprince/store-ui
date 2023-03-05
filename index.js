@@ -12,7 +12,7 @@ async function startApp() {
 		//	console.log(JSON.stringify(full));
 			let proto = (await window.pine.fetch.post("https://api-pinocchio.cyclic.app/pine/protocol/new", {pine: window.app.pid, params: full})).data.shortId;
 			let prot = document.querySelector('.protocol')
-			prot.innerHTML = proto;
+			prot.innerHTML = "¿" + proto + "?";
 			document.querySelector('.skelet').classList.add('hidden');
 			prot.parentElement.classList.remove('hidden')
 			// Android.broadcastProtocol(proto);
