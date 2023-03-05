@@ -16,10 +16,24 @@ async function startApp() {
 			document.querySelector('.skelet').classList.add('hidden');
 			prot.parentElement.classList.remove('hidden')
 			// Android.broadcastProtocol(proto);
+			
+			let file = await getPinoFile();
+			let sharedData = {
+			 	files:[file], 
+				text: 
+`¿${proto}?
+
+Your text here...
+
+#pinopost`, 
+title:"helo"
+			}
+			prot.onclick = ()=>{navigator.share(sharedData)} 
+						
 		}).catch((e)=>{
 			console.log(e)
 		});
-	} 
+	}
 	
 	try {
 		// let app = {pid: "ee50c320-a0b6-400e-97e2-e9839c2f8c93"} 
@@ -50,6 +64,26 @@ async function startApp() {
 		document.querySelector('#loader').classList.add('hidden')
 		document.querySelector('.error').classList.remove('hidden');
 	}
+}
+
+async function getPinoFile() {
+	let canvas = document.createElement('canvas');
+	let image = document.querySelector('.image');
+	canvas.width = image.width;
+	canvas.height = image.height;
+	canvas.getContext('2d').drawImage(image,0,0,image.width, image.height);
+	
+	const dataUrl = canvas.toDataURL();
+	const blob = await (await fetch(dataUrl)).blob();
+	let file = new File(
+      [blob],
+      'animation.png',
+      {
+        type: blob.type,
+        lastModified: new Date().getTime()
+      }
+    )
+	return file;
 }
 
 async function startSubmit(e) {
