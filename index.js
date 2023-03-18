@@ -17,19 +17,23 @@ async function startApp() {
 			prot.parentElement.classList.remove('hidden')
 			// Android.broadcastProtocol(proto);
 			
-			let file = await getPinoFile();
+		getPinoFile((file)=>{
 			let sharedData = {
-			 	files:[file], 
-				text: 
-`¿${proto}?
-
-Your text here...
-
-#pinopost`, 
-title:"helo"
+			 //	files:[file], 
+				files: [file]
 			}
-			prot.onclick = ()=>{navigator.share(sharedData)} 
-						
+			prot.onclick = ()=>{
+				navigator.clipboard.writeText(
+`¿${proto}? 
+
+Your content here...
+
+#pinopost`).then(
+  () => {
+    navigator.share(sharedData);
+  },
+);}  
+			});	
 		}).catch((e)=>{
 			console.log(e)
 		});
@@ -66,24 +70,30 @@ title:"helo"
 	}
 }
 
-async function getPinoFile() {
+function getPinoFile(cb) {
 	let canvas = document.createElement('canvas');
-	let image = document.querySelector('.image');
+	let image = new Image();
+	image.src = '/image.png';
+	image.onload = ()=>{
 	canvas.width = image.width;
 	canvas.height = image.height;
 	canvas.getContext('2d').drawImage(image,0,0,image.width, image.height);
 	
-	const dataUrl = canvas.toDataURL();
-	const blob = await (await fetch(dataUrl)).blob();
+	// const dataUrl = canvas.toDataURL();
+	// const blob = await (await fetch(dataUrl)).blob();
+	canvas.toBlob((blob)=>{
 	let file = new File(
       [blob],
-      'animation.png',
+      'image.png',
       {
-        type: blob.type,
+        type: "image/png",
         lastModified: new Date().getTime()
       }
     )
-	return file;
+    
+    cb(file);
+	}) 
+	} 
 }
 
 async function startSubmit(e) {
@@ -137,7 +147,7 @@ function drawObject(e) {
 	} else if (e.type == "note") {
 		out += `
 		<div class="relative z-0 w-full mb-6 group">
-    		<textarea name="${e.name.trim()}" id="note_input_${idIndex}" class="block py-2.5 h-[${e.height}] rounded-lg px-2 w-full text-sm bg-transparent appearance-none text-white ring-gray-400 ring-1 border-0 outline-none focus:ring-[#00ff0f] peer" placeholder=" " required></textarea>
+    		<textarea name="${e.name.trim()}" id="note_input_${idIndex}" style="height: ${e.height};" class="block py-2.5 h-[${e.height}] rounded-lg px-2 w-full text-sm bg-transparent appearance-none text-white ring-gray-400 ring-1 border-0 outline-none focus:ring-[#00ff0f] peer" placeholder=" " required></textarea>
     		<label for="note_input_${idIndex}" class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-2.5 left-2 -z-15 origin-[0] peer-focus:left-2 peer-focus:text-[#00ff0f] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 bg-[#212528] px-2">${e.title.trim()}</label>
 		</div>`
 	} else if (e.type == "options") {
