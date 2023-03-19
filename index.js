@@ -23,27 +23,7 @@ async function startApp() {
 			prot.innerHTML = "¿" + proto + "?";
 			document.querySelector('.skelet').classList.add('hidden');
 			prot.parentElement.classList.remove('hidden')
-			// Android.broadcastProtocol(proto);
-			
-		getPinoFile((file)=>{
-			let sharedData = {
-			 //	files:[file], 
-				files: [file]
-			}
-			prot.onclick = ()=>{
-				navigator.clipboard.writeText(
-`¿${proto}? 
-
-Your content here...
-
-#pinopost`).then(
-  () => {
-    navigator.share(sharedData);
-  },
-);}  
-			});	
-		}).catch((e)=>{
-			console.log(e)
+			PineInput.broadcastProtocol(proto);
 		});
 	}
 	
