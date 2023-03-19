@@ -23,7 +23,9 @@ async function startApp() {
 			prot.innerHTML = "¿" + proto + "?";
 			document.querySelector('.skelet').classList.add('hidden');
 			prot.parentElement.classList.remove('hidden')
-			PineInput.broadcastProtocol(proto);
+			prot.onclick = ()=>{
+				PineInput.broadcastProtocol(proto);
+			} 
 		});
 	}
 	
@@ -47,7 +49,7 @@ async function startApp() {
 	});
 	
 	output += `
-	<input type="submit" value="Share" class="bg-[#00ff0f] px-3 text-md text-[#212528] rounded-3xl py-1.5 " />`
+	<input type="submit" value="Share" class="bg-[#00ff0f] px-3 text-sm text-[#212528] rounded-3xl py-1.5 " />`
 	document.querySelector('#loader').classList.add('hidden');
 	form.innerHTML = output;
 	form.classList.remove('hidden');
