@@ -131,7 +131,7 @@ function drawObject(e) {
 	if(e.type == 'file') {
 		out += `
 		<div class="relative z-0 w-full mb-6 group">
-			<input class="block w-full text-sm rounded-lg cursor-pointer text-gray-400 outline-none bg-transparent ring-1 ring-gray-400 focus:ring-[#00ff0f] peer" id="file_input_${idIndex}" name="${e.name}" multiple="true" accepts="${e.exts.replace(/\|/g,",")}" type="file">
+			<input class="block w-full text-sm rounded-lg cursor-pointer text-gray-400 outline-none bg-transparent ring-1 ring-gray-400 focus:ring-[#00ff0f] peer" id="file_input_${idIndex}" name="${e.name}" multiple="true" accept="${e.exts}" type="file">
 			<label for="file_input_${idIndex}" class="font-medium absolute text-sm text-gray-400 transform -z-15 origin-[0] top-3 hidden peer-focus:block left-2 peer-focus:text-[#00ff0f] scale-75 peer-focus:fade -translate-y-6 bg-[#212528] px-2">${e.title}</label>
 		</div>`
 	} else if (e.type == "note") {
