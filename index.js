@@ -39,7 +39,7 @@ async function startApp() {
     
 	pineData = pineData.data.url + "/pine-input.json";
 	pineData = (await axios.get(pineData)).data;
-	
+	output += "<div style='padding-bottom: 3vh'>"
 	pineData.forEach((value)=>{
 		if(Array.isArray(value)) {
 			output += `\n<div class="input-row flex justify-between">\n`;
@@ -51,7 +51,8 @@ async function startApp() {
 	});
 	
 	output += `
-	<div style="bottom:3.5%;right:5%;" class="share-btn absolute px-4">
+	</div>
+	<div style="position: fixed;bottom:3.5vh;right:5%;" class="share-btn px-4">
 		<input type="submit" value="Share" style="width:21vw;height:11vw;border-radius:40px;" class="bg-[#00ff0f] px-3 text-sm text-[#212528] py-1.5" />
 	</div>`
 	document.querySelector('#loader').classList.add('hidden');
