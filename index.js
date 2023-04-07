@@ -4,19 +4,21 @@ var output = '';
 window.onload = ()=>{startApp()};
 
 let heightScaler = {
-	"smaller":"10vh", 
-	"small": "20vh",
-	"normal": "25vh",
-	"medium": "30vh", 
-	"large": "60vh",
-	"larger": "70vh"
+	"smaller":"15vh", 
+	"small" : "25vh",
+	"normal": "35vh",
+	"medium": "50vh", 
+	"large" : "60vh",
+	"larger": "80vh"
 }
 async function startApp() {
 	setConfig();
 	
 	let form = document.querySelector('form.main');
 	form.onsubmit = (e)=>{
-		startSubmit(e).then(async (full)=>{
+		e.preventDefault();
+		
+		startSubmit().then(async (full)=>{
 		//	console.log(JSON.stringify(full));
 			let proto = (await window.pine.fetch.post("https://api-pinocchio.cyclic.app/pine/protocol/new", {pine: window.app.pid, params: full})).data.shortId;
 			let prot = document.querySelector('.protocol')
@@ -49,48 +51,23 @@ async function startApp() {
 	});
 	
 	output += `
-	<input type="submit" value="Share" class="bg-[#00ff0f] px-3 text-sm text-[#212528] rounded-3xl py-1.5 " />`
+	<div style="bottom:2%;right:2%;" class="share-btn absolute px-4">
+		<input type="submit" value="Share" style="width:21vw;height:11vw;border-radius:40px;" class="bg-[#00ff0f] px-3 text-sm text-[#212528] py-1.5" />
+	</div>`
 	document.querySelector('#loader').classList.add('hidden');
 	form.innerHTML = output;
 	form.classList.remove('hidden');
 	} catch (e) {
 		console.log(e.message)
-		document.querySelector('#loader').classList.add('hidden')
+		document.querySelector('#loader').classList.add('hidden');
+		document.querySelector('.error h2').innerHTML = e.message;
 		document.querySelector('.error').classList.remove('hidden');
 	}
 }
 
-function getPinoFile(cb) {
-	let canvas = document.createElement('canvas');
-	let image = new Image();
-	image.src = '/image.png';
-	image.onload = ()=>{
-	canvas.width = image.width;
-	canvas.height = image.height;
-	canvas.getContext('2d').drawImage(image,0,0,image.width, image.height);
-	
-	// const dataUrl = canvas.toDataURL();
-	// const blob = await (await fetch(dataUrl)).blob();
-	canvas.toBlob((blob)=>{
-	let file = new File(
-      [blob],
-      'image.png',
-      {
-        type: "image/png",
-        lastModified: new Date().getTime()
-      }
-    )
-    
-    cb(file);
-	}) 
-	} 
-}
-
-async function startSubmit(e) {
+async function startSubmit() {
 	var finalObj = {};
-	e.preventDefault();
 	
-	// alert('Started');
 	let form = document.querySelector('form')
 	form.classList.add('hidden');
 	document.querySelector('.skelet').classList.remove('hidden');
@@ -105,7 +82,7 @@ async function startSubmit(e) {
 		for(var el of selects) {
 			finalObj[el.getAttribute('name')] = el.value;
 		}
-		let texts = form.querySelectorAll('input[type="text"]')
+		let texts = form.querySelectorAll('input[freestyle]')
 		for(var el of texts) {
 			finalObj[el.name] = el.value;
 		}
@@ -151,9 +128,10 @@ function drawObject(e) {
 			<label for="option_input_${idIndex}" class="font-medium absolute text-sm text-gray-400 transform -z-15 origin-[0] top-3 hidden peer-focus:block left-2 peer-focus:text-[#00ff0f] scale-75 peer-focus:fade -translate-y-6 bg-[#212528] px-2">${e.title.trim()}</label>
 		</div>`
 	} else {
+		let type = e.type;
 		out += `
 		<div class="relative z-0 w-full mb-6 group">
-    		<input type="text" name="${e.name.trim()}" id="float_input_${idIndex}" class="block py-2.5 rounded-lg px-2 w-full text-sm bg-transparent appearance-none text-white ring-gray-400 ring-1 border-0 outline-none focus:ring-[#00ff0f] peer" placeholder=" " required />
+    		<input type="${(type != 'file') ? type : 'text' }" name="${e.name.trim()}" id="float_input_${idIndex}" class="block py-2.5 rounded-lg px-2 w-full text-sm bg-transparent appearance-none text-white ring-gray-400 ring-1 border-0 outline-none focus:ring-[#00ff0f] peer" placeholder=" " required freestyle />
     		<label for="float_input_${idIndex}" class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-2.5 left-2 -z-15 origin-[0] peer-focus:left-2 peer-focus:text-[#00ff0f] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 bg-[#212528] px-2">${e.title.trim()}</label>
 		</div>`
 	}
@@ -165,7 +143,7 @@ function drawObject(e) {
 function setConfig() {
 	window.pine = {
 		server: "https://api-pinocchio.cyclic.app", 
-		API_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNjc5MDg0MDU4LCJleHAiOjE2ODE2NzYwNTh9.9mhuvLYXUX-9owGk9Unc87I9VBmY2V-AUJYFDt147fs"
+		API_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlBpbm9TdG9yZSIsImlhdCI6MTY3OTgyMzAzOSwiZXhwIjoxNjgyNDE1MDM5fQ.lsi0e7qbuAXpXNDcWu_hcqROp5JaNHVwyC4ckIRetRg"
 	}
 	window.pine.fetch = axios.create({baseUrl: window.pine.server}), 
 	window.pine.fetch.defaults.headers.common['Authorization'] = `Bearer ${window.pine.API_KEY}`; 
@@ -176,6 +154,5 @@ function setConfig() {
 		urlParams[key] = value;
 	});
 	window.app = {};
-	window.app["pid"] = urlParams.pid
-//	window.app.params = urlParams;
+	window.app["pid"] = urlParams.pid;
 }
