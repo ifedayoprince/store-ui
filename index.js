@@ -51,7 +51,7 @@ async function startApp() {
 	});
 	
 	output += `
-	<div style="bottom:2%;right:2%;" class="share-btn absolute px-4">
+	<div style="bottom:3.5%;right:5%;" class="share-btn absolute px-4">
 		<input type="submit" value="Share" style="width:21vw;height:11vw;border-radius:40px;" class="bg-[#00ff0f] px-3 text-sm text-[#212528] py-1.5" />
 	</div>`
 	document.querySelector('#loader').classList.add('hidden');
