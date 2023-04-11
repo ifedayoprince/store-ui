@@ -144,8 +144,9 @@ function drawObject(e) {
 function setConfig() {
 	window.pine = {
 		server: "https://api-pinocchio.cyclic.app", 
-		API_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlBpbm9TdG9yZSIsImlhdCI6MTY3OTgyMzAzOSwiZXhwIjoxNjgyNDE1MDM5fQ.lsi0e7qbuAXpXNDcWu_hcqROp5JaNHVwyC4ckIRetRg"
+		API_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlNlcnZpY2VzIiwiaWF0IjoxNjgxMTgyNjkwLCJleHAiOjE2ODY1Mzk0OTB9.qTUKRyqIP3YeiJCK1dDRS8ugUJgmjU5UeDXsD9hMHeM"
 	}
+	
 	window.pine.fetch = axios.create({baseUrl: window.pine.server}), 
 	window.pine.fetch.defaults.headers.common['Authorization'] = `Bearer ${window.pine.API_KEY}`; 
 	
